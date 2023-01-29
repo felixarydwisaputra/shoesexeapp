@@ -1,0 +1,15 @@
+{
+  "uid": "",
+  "nama": "",
+  "email": "",
+  "photoUrl": "",
+  "logoUrl": "",
+  "createdAt": "",
+  "updatedAt": "",
+  "produk": [
+    {
+      "id_produk": "",
+      "createdAt": ""
+    }
+  ]
+}

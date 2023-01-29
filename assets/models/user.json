@@ -1,0 +1,18 @@
+{
+  "uid": "qweqeqwe",
+  "nama": "",
+  "phone": "09839082342",
+  "photoUrl": "",
+  "status": "",
+  "email": "felixand@gmail.com",
+  "createdAt": "3242343-234234-",
+  "lastSignIn": "234234234234",
+  "updateAt": "2342343242",
+  "alamat": {
+    "idPorv": "12",
+    "prov": "Bali",
+    "idKota": "1",
+    "kota": "Denpasar",
+    "address": "Jl.gn indrakial"
+  }
+}

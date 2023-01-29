@@ -1,0 +1,40 @@
+name: shoesexe
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  lottie: 2.1.0
+  introduction_screen: 3.1.1
+  google_fonts: 3.0.1
+  carousel_slider: 4.2.1
+  intl: 0.17.0
+  dropdown_search: 5.0.5
+  firebase_core: 2.4.1
+  firebase_auth: 4.2.4
+  google_sign_in: 5.4.3
+  get_storage: 2.0.3
+  cloud_firestore: 4.3.0
+  http: 0.13.5
+  dio: 4.0.6
+  image_picker: 0.8.6+1
+  firebase_storage: 11.0.10
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  assets: 
+    - assets/logo/
+    - assets/lotties/
+    - assets/images/
+    - assets/produk/
+  uses-material-design: true
+
