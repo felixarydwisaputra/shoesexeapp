@@ -94,171 +94,58 @@ class HomescreenView extends GetView<HomescreenController> {
                     Text(""),
                   ],
                 ),
-                bottomNavigationBar: controller.tabindex.value == 1
-                    ? Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                        child: Container(
-                          height: Get.height * 0.17,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: 50,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                        child: Container(
-                                      padding: EdgeInsets.all(2),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Total",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14),
-                                          ),
-                                          Text(
-                                            "Rp 0,00",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 14),
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                                    Container(
-                                      width: Get.width * 0.3,
-                                      child: ElevatedButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          "Checkout",
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 12),
-                                        ),
-                                        style: ElevatedButton.styleFrom(
-                                          minimumSize: Size(100, 40),
-                                          backgroundColor: ketiga,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 11,
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: ketiga,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                height: Get.height * 0.08,
-                                child: TabBar(
-                                  indicator: UnderlineTabIndicator(
-                                    insets: EdgeInsets.fromLTRB(
-                                      53,
-                                      40,
-                                      53,
-                                      53,
-                                    ),
-                                  ),
-                                  physics: NeverScrollableScrollPhysics(),
-                                  onTap: (value) {
-                                    controller.tabindex.value = value;
-                                    print(Get.arguments);
-                                  },
-                                  controller: controller.tabController,
-                                  tabs: [
-                                    Tab(
-                                      child:
-                                          Image.asset("assets/logo/home.png"),
-                                    ),
-                                    Tab(
-                                      child:
-                                          Image.asset("assets/logo/cart.png"),
-                                    ),
-                                    Tab(
-                                      child: Image.asset(
-                                          "assets/logo/favorite.png"),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(Routes.USER);
-                                      },
-                                      child: Container(
-                                        child:
-                                            Image.asset("assets/logo/user.png"),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                bottomNavigationBar: Padding(
+                  padding:
+                      EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 23),
+                  child: Container(
+                    height: Get.height * 0.08,
+                    child: Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: ketiga,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ))
-                    : Padding(
-                        padding: EdgeInsets.only(
-                            left: 20, top: 10, right: 20, bottom: 23),
-                        child: Container(
                           height: Get.height * 0.08,
-                          child: Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: ketiga,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                height: Get.height * 0.08,
-                                child: TabBar(
-                                  indicator: UnderlineTabIndicator(
-                                    insets: EdgeInsets.fromLTRB(
-                                      53,
-                                      40,
-                                      53,
-                                      53,
-                                    ),
-                                  ),
-                                  physics: NeverScrollableScrollPhysics(),
-                                  onTap: (value) {
-                                    controller.tabindex.value = value;
-                                  },
-                                  controller: controller.tabController,
-                                  tabs: [
-                                    Tab(
-                                      child:
-                                          Image.asset("assets/logo/home.png"),
-                                    ),
-                                    Tab(
-                                      child:
-                                          Image.asset("assets/logo/cart.png"),
-                                    ),
-                                    Tab(
-                                      child: Image.asset(
-                                          "assets/logo/favorite.png"),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(Routes.USER);
-                                      },
-                                      child: Container(
-                                        child:
-                                            Image.asset("assets/logo/user.png"),
-                                      ),
-                                    ),
-                                  ],
+                          child: TabBar(
+                            indicator: UnderlineTabIndicator(
+                              insets: EdgeInsets.fromLTRB(
+                                53,
+                                40,
+                                53,
+                                53,
+                              ),
+                            ),
+                            physics: NeverScrollableScrollPhysics(),
+                            onTap: (value) {
+                              controller.tabindex.value = value;
+                            },
+                            controller: controller.tabController,
+                            tabs: [
+                              Tab(
+                                child: Image.asset("assets/logo/home.png"),
+                              ),
+                              Tab(
+                                child: Image.asset("assets/logo/cart.png"),
+                              ),
+                              Tab(
+                                child: Image.asset("assets/logo/favorite.png"),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.USER);
+                                },
+                                child: Container(
+                                  child: Image.asset("assets/logo/user.png"),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
             );
           }

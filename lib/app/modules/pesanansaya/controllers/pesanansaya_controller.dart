@@ -1,23 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:shoesexe/app/controllers/auth_controller.dart';
 
 class PesanansayaController extends GetxController {
-  //TODO: Implement PesanansayaController
+  AuthController authC = Get.find<AuthController>();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  Stream<QuerySnapshot<Map<String, dynamic>>> pesanan() async* {
+    final data = await firestore
+        .collection("users")
+        .doc(authC.auth.currentUser!.email)
+        .collection("transaksi")
+        .orderBy("waktupesan", descending: true);
+    yield* data.snapshots();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<DocumentSnapshot<Map<String, dynamic>>> detailproduk(
+      String id_produk) async {
+    var data = await firestore.collection("produk").doc(id_produk).get();
+    return data;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

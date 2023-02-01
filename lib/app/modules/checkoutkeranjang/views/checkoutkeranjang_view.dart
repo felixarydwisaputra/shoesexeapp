@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoesexe/app/controllers/auth_controller.dart';
-import 'package:shoesexe/app/data/models/data_produk.dart';
-import 'package:shoesexe/app/modules/homescreen/controllers/homescreen_controller.dart';
-import 'package:shoesexe/app/modules/homestore/controllers/homestore_controller.dart';
-import 'package:shoesexe/app/routes/app_pages.dart';
-import 'package:shoesexe/warna.dart';
-import 'package:dropdown_search/dropdown_search.dart';
 
+import '../../../../warna.dart';
+import '../../../controllers/auth_controller.dart';
+import '../../../data/models/data_produk.dart';
+import '../../../routes/app_pages.dart';
+import '../../homescreen/controllers/homescreen_controller.dart';
 import '../controllers/checkout_controller.dart';
 
-class CheckoutView extends GetView<CheckoutController> {
+class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
   final authC = Get.find<AuthController>();
   final homeC = Get.find<HomescreenController>();
   late int subproduk;
@@ -25,9 +24,6 @@ class CheckoutView extends GetView<CheckoutController> {
         leading: Container(
           child: IconButton(
             onPressed: () async {
-              await controller.hapus(
-                  controller.dataP.idProduk!, controller.dataToko["email"]);
-
               Get.back();
             },
             icon: Icon(
@@ -291,6 +287,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                                   ConnectionState.done) {
                                                 var dataDetail =
                                                     snap.data?.docs;
+
                                                 return ListView.builder(
                                                   shrinkWrap: true,
                                                   physics:
@@ -319,6 +316,36 @@ class CheckoutView extends GetView<CheckoutController> {
                                                               ProdukData.fromJson(
                                                                   snapshot.data!
                                                                       .data()!);
+                                                          controller.listproduk
+                                                              .add({
+                                                            "nama": produk
+                                                                .namaProduk,
+                                                            "namatoko":
+                                                                dataP[index]
+                                                                    ["toko"],
+                                                            "emailtoko":
+                                                                dataP[index]
+                                                                    ["id_toko"],
+                                                            "berat":
+                                                                produk.berat,
+                                                            "harga":
+                                                                produk.harga,
+                                                            "jumlah":
+                                                                dataDetail?[
+                                                                        index]
+                                                                    ["jumlah"],
+                                                            "id":
+                                                                produk.idProduk,
+                                                            "size": dataDetail?[
+                                                                index]["size"],
+                                                            "pemesan":
+                                                                controller
+                                                                        .dataU[
+                                                                    "email"],
+                                                            "alamat":
+                                                                "${controller.dataU["alamat"]["address"]} ${controller.dataU["alamat"]["kota"]} ${controller.dataU["alamat"]["prov"]}"
+                                                          });
+
                                                           return Container(
                                                             height: 70,
                                                             child: Row(
@@ -402,7 +429,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Text(
-                                            "${homeC.rupiah.format(controller.subproduk)}",
+                                            "${homeC.rupiah.format(dataP[index]["total"])}",
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12),
@@ -446,12 +473,9 @@ class CheckoutView extends GetView<CheckoutController> {
                           child: DropdownSearch<Map<String, dynamic>>(
                             onChanged: (value) async {
                               controller.kurir.value = value?["kode"];
-                              print(controller.kurir.value);
                               controller.totalOngkir(
-                                await controller.dataToko["alamat"]["idKota"]
+                                await controller.dataU["alamat"]["idKota"]
                                     .toString(),
-                                controller.dataU["alamat"]["idKota"].toString(),
-                                controller.dataP.berat.toString(),
                                 value?["kode"],
                               );
                               await Future.delayed(Duration(seconds: 4));
@@ -740,6 +764,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                         children: [
                                           Text(
                                             "${homeC.rupiah.format(controller.subproduk)}",
+                                            // "${homeC.rupiah.format(controller.subproduk)}",
                                             style: GoogleFonts.poppins(
                                                 fontSize: 9,
                                                 fontWeight: FontWeight.w500),
@@ -814,6 +839,11 @@ class CheckoutView extends GetView<CheckoutController> {
                                             controller.biayapenanganan.value !=
                                                 0) {
                                           controller.isloading.value = true;
+                                          Map<String, dynamic> hasil =
+                                              await controller.transaksi();
+                                          Map<String, dynamic> pesan =
+                                              await controller.pesanantoko();
+
                                           await Future.delayed(
                                               Duration(seconds: 3));
                                           Get.dialog(
@@ -892,80 +922,6 @@ class CheckoutView extends GetView<CheckoutController> {
                                           Get.snackbar("Gagal",
                                               "Data transaksi tidak boleh kosong");
                                         }
-
-                                        // Get.defaultDialog(
-                                        //     barrierDismissible: false,
-                                        //     title: "",
-                                        //     backgroundColor: kesatu,
-                                        //     content: GestureDetector(
-                                        //       onTap: () {
-                                        //         Get.back();
-                                        //         Get.back();
-                                        //       },
-                                        //       child: Container(
-                                        //         padding: EdgeInsets.only(
-                                        //             bottom: 17,
-                                        //             left: 15,
-                                        //             right: 15),
-                                        //         height: Get.height * 0.5,
-                                        //         width: double.infinity,
-                                        //         color: kesatu,
-                                        //         child: Container(
-                                        //           decoration: BoxDecoration(
-                                        //               border: Border.all(
-                                        //                   color: keempat,
-                                        //                   width: 3),
-                                        //               borderRadius:
-                                        //                   BorderRadius.circular(
-                                        //                       20)),
-                                        //           child: Column(
-                                        //             children: [
-                                        //               Expanded(
-                                        //                   flex: 2,
-                                        //                   child: Container(
-                                        //                     child: Image.asset(
-                                        //                         "assets/logo/logosepatu.png"),
-                                        //                   )),
-                                        //               Expanded(
-                                        //                   child: Container(
-                                        //                 child: Text(
-                                        //                   "Terima kasih sudah berbelanja",
-                                        //                   textAlign:
-                                        //                       TextAlign.center,
-                                        //                   style: GoogleFonts
-                                        //                       .poppins(
-                                        //                           color:
-                                        //                               keempat,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w600,
-                                        //                           fontSize: 20,
-                                        //                           fontStyle:
-                                        //                               FontStyle
-                                        //                                   .italic),
-                                        //                 ),
-                                        //               )),
-                                        //               Expanded(
-                                        //                   child: Container(
-                                        //                 child: Text(
-                                        //                   "Shoes.exe",
-                                        //                   style: GoogleFonts
-                                        //                       .poppins(
-                                        //                           color:
-                                        //                               keempat,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w400,
-                                        //                           fontSize: 12),
-                                        //                 ),
-                                        //                 alignment:
-                                        //                     Alignment.center,
-                                        //               )),
-                                        //             ],
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: ketiga,

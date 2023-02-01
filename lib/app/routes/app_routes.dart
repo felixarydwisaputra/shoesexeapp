@@ -26,6 +26,7 @@ abstract class Routes {
   static const FAVORITE = _Paths.FAVORITE;
   static const DETAILPRODUKTOKO = _Paths.DETAILPRODUKTOKO;
   static const ALAMATCOMPLETE = _Paths.ALAMATCOMPLETE;
+  static const CHECKOUTKERANJANG = _Paths.CHECKOUTKERANJANG;
 }
 
 abstract class _Paths {
@@ -53,4 +54,5 @@ abstract class _Paths {
   static const FAVORITE = '/favorite';
   static const DETAILPRODUKTOKO = '/detailproduktoko';
   static const ALAMATCOMPLETE = '/alamatcomplete';
+  static const CHECKOUTKERANJANG = '/checkoutkeranjang';
 }

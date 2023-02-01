@@ -20,6 +20,12 @@ class HomescreenController extends GetxController
 
   late TabController tabController;
   var rupiah = NumberFormat.simpleCurrency(locale: "id_ID");
+  var total = 0;
+
+  void up() {
+    total = total;
+    update();
+  }
 
   @override
   void onInit() {
@@ -97,16 +103,16 @@ class HomescreenController extends GetxController
         .snapshots();
   }
 
-  //STREAM PRODUK
-  Future dataProduk() async {
-    final produk = await firestore.collection("produk").get();
-    return produk.docs.map((e) => ProdukData.fromJson(e.data())).toList();
-  }
-
   // STREAM BRANDS
   Future<QuerySnapshot<Map<String, dynamic>>> dataToko() async {
     final data = await firestore.collection("toko").get();
     return data;
+  }
+
+  //STREAM PRODUK
+  Future dataProduk() async {
+    final produk = await firestore.collection("produk").get();
+    return produk.docs.map((e) => ProdukData.fromJson(e.data())).toList();
   }
 
   // STREAM KERANJANG USER
@@ -115,13 +121,165 @@ class HomescreenController extends GetxController
         .collection("users")
         .doc(authC.auth.currentUser!.email)
         .collection("keranjang")
+        .orderBy("updatedAt", descending: true)
         .snapshots();
   }
 
   Future detailP(String id_produk) async {
     final data = await firestore.collection("produk").doc(id_produk).get();
-    return data.data();
+    return await data.data();
   }
+
+  // MENGAMBIL DATA TOKO DARI COLLECTION KERANJANG
+  Stream<QuerySnapshot<Map<String, dynamic>>> dataKeranjang() async* {
+    CollectionReference users = firestore.collection("users");
+
+    final data = await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .orderBy("updatedAt", descending: true);
+    yield* await data.snapshots();
+  }
+
+  // MENGAMBIL DATA TOKO BERDASARKAN COLLECTION KERANJANG
+  Stream<DocumentSnapshot<Map<String, dynamic>>> dataT(String id_toko) async* {
+    final data = await firestore.collection("toko").doc(id_toko);
+    yield* await data.snapshots();
+  }
+
+  // MENGAMBIL DATA PRODUK BERDASARKAN TOKO
+  Stream<QuerySnapshot<Map<String, dynamic>>> produkdata(
+      String id_toko) async* {
+    CollectionReference users = firestore.collection("users");
+
+    final data = await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .doc(id_toko)
+        .collection("produk")
+        .orderBy("createdAt", descending: true);
+    yield* await data.snapshots();
+  }
+
+  // MENGAMBIL DETAIL PRODUK DARI PRODUK
+  Stream<DocumentSnapshot<Map<String, dynamic>>> detailProduk(
+      String id) async* {
+    final data = await firestore.collection("produk").doc(id);
+    yield* await data.snapshots();
+  }
+
+  // FUNGSI HAPUS KERANJANG
+  Future hapus(String id_produk, id_toko, int subtotal, beratproduk) async {
+    CollectionReference users = firestore.collection("users");
+    final dataPrdk = await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .doc(id_toko)
+        .collection("produk")
+        .doc(id_produk)
+        .get();
+
+    ProdukData produkD = ProdukData.fromJson(dataPrdk.data()!);
+
+    var hasil = subtotal - produkD.harga!;
+    var beratsubproduk = beratproduk - produkD.berat!;
+
+    await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .doc(id_toko)
+        .update({
+      "total": hasil,
+      "updatedAt": DateTime.now().toIso8601String(),
+      "berat": beratsubproduk
+    });
+
+    final dataUser = await users.doc(authC.auth.currentUser!.email).get();
+    var keranjang = dataUser["totalkeranjang"] - produkD.harga;
+    var totberatproduk = dataUser["totalberatproduk"] - produkD.berat;
+    await users.doc(authC.auth.currentUser!.email).update({
+      "totalkeranjang": keranjang,
+      "totalberatproduk": totberatproduk,
+    });
+
+    await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .doc(id_toko)
+        .collection("produk")
+        .doc(id_produk)
+        .delete();
+
+    final data = await users
+        .doc(authC.auth.currentUser!.email)
+        .collection("keranjang")
+        .doc(id_toko)
+        .collection("produk")
+        .get();
+
+    if (data.docs.length == 0) {
+      await firestore
+          .collection("users")
+          .doc(authC.auth.currentUser!.email)
+          .collection("keranjang")
+          .doc(id_toko)
+          .delete();
+    }
+  }
+
+  // MEMANTAU HARGA KERANJANG
+  Stream<DocumentSnapshot<Map<String, dynamic>>> totalKeranjang() async* {
+    yield* firestore
+        .collection("users")
+        .doc(authC.auth.currentUser!.email)
+        .snapshots();
+  }
+
+  // CHECKOUT DARI KERANJANG
+  Future<Map<String, dynamic>> belanja(
+      String id_produk, id_toko, int jumlah, ukuran, harga
+      // String id_toko
+      ) async {
+    try {
+      CollectionReference users = firestore.collection("users");
+
+      await users
+          .doc(authC.auth.currentUser!.email)
+          .collection("belanja")
+          .doc(id_toko)
+          .set({
+        "createdAt": DateTime.now().toIso8601String(),
+        "id_toko": id_toko,
+      });
+
+      await users
+          .doc(authC.auth.currentUser!.email)
+          .collection("belanja")
+          .doc(id_toko)
+          .collection("produk")
+          .doc(id_produk)
+          .set({
+        "id_produk": id_produk,
+        "createdAt": DateTime.now().toIso8601String(),
+        "id_toko": id_toko,
+        "jumlah": jumlah,
+        "size": ukuran,
+        "harga": harga
+      });
+
+      return {
+        "error": false,
+        "message": "Produk sedang diproses",
+      };
+    } catch (e) {
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
+
+  // FUNGSI HARGA
 
   // DUMMY DATA PERCOBAAN
 

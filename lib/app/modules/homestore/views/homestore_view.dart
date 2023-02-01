@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shoesexe/app/controllers/auth_controller.dart';
 import 'package:shoesexe/app/data/models/data_produk.dart';
 import 'package:shoesexe/app/data/models/toko.dart';
+import 'package:shoesexe/app/modules/pesanantoko/controllers/pesanantoko_controller.dart';
 import 'package:shoesexe/app/routes/app_pages.dart';
 import 'package:shoesexe/warna.dart';
 
@@ -17,6 +18,7 @@ import '../controllers/homestore_controller.dart';
 class HomestoreView extends GetView<HomestoreController> {
   final homC = Get.put(HomestoreController());
   final authC = Get.find<AuthController>();
+  final pesananC = Get.put(PesanantokoController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +36,46 @@ class HomestoreView extends GetView<HomestoreController> {
         actions: [
           Row(
             children: [
-              GestureDetector(
-                  onTap: () {
-                    Get.toNamed(Routes.PESANANTOKO);
-                  },
-                  child: Image.asset("assets/logo/lonceng.png")),
+              StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: pesananC.pesanan(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.active) {
+                    List pesanan = snapshot.data!.docs;
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.PESANANTOKO);
+                      },
+                      child: pesanan.length != 0
+                          ? Stack(
+                              children: [
+                                Image.asset("assets/logo/lonceng.png"),
+                                Container(
+                                  alignment: Alignment.center,
+                                  width: 13,
+                                  height: 13,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Text(
+                                    "${pesanan.length}",
+                                    style: GoogleFonts.poppins(fontSize: 10),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Stack(
+                              children: [
+                                Image.asset("assets/logo/lonceng.png"),
+                              ],
+                            ),
+                    );
+                  }
+                  return SizedBox(
+                    height: 1,
+                  );
+                },
+              ),
               IconButton(
                   onPressed: () {
                     Get.toNamed(Routes.TAMBAHBARANG);

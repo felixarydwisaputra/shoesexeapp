@@ -7,11 +7,10 @@ import '../modules/catalog/views/catalog_view.dart';
 import '../modules/checkout/bindings/checkout_binding.dart';
 import '../modules/checkout/views/alamat_view.dart';
 import '../modules/checkout/views/checkout_view.dart';
+import '../modules/checkoutkeranjang/bindings/checkoutkeranjang_binding.dart';
+import '../modules/checkoutkeranjang/views/checkoutkeranjang_view.dart';
 import '../modules/detailproduk/bindings/detailproduk_binding.dart';
 import '../modules/detailproduk/views/detailproduk_view.dart';
-
-import '../modules/tokodetail/bindings/editbarang_binding.dart';
-import '../modules/tokodetail/views/editbarang_view.dart';
 import '../modules/editdetailproduk/bindings/editproduk_binding.dart';
 import '../modules/editdetailproduk/views/editproduk_view.dart';
 import '../modules/favorite/bindings/favorite_binding.dart';
@@ -39,6 +38,8 @@ import '../modules/store/bindings/store_binding.dart';
 import '../modules/store/views/store_view.dart';
 import '../modules/tambahbarang/bindings/tambahbarang_binding.dart';
 import '../modules/tambahbarang/views/tambahbarang_view.dart';
+import '../modules/tokodetail/bindings/editbarang_binding.dart';
+import '../modules/tokodetail/views/editbarang_view.dart';
 import '../modules/user/bindings/user_binding.dart';
 import '../modules/user/views/user_view.dart';
 
@@ -152,6 +153,11 @@ class AppPages {
       name: _Paths.FAVORITE,
       page: () => FavoriteView(),
       binding: FavoriteBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHECKOUTKERANJANG,
+      page: () => CheckoutkeranjangView(),
+      binding: CheckoutkeranjangBinding(),
     ),
   ];
 }

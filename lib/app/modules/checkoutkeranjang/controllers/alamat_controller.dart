@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shoesexe/app/data/models/user_model.dart';
 
 import '../../../controllers/auth_controller.dart';
 

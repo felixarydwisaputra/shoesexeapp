@@ -436,12 +436,23 @@ class DetailprodukView extends GetView<DetailprodukController> {
                   child: Row(children: [
                     Expanded(
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          int subproduk = controller.subproduk(
+                              controller.dataP.harga!,
+                              controller.jumlahProduk.value);
+                          await controller.belanja(
+                            controller.dataP.idProduk!,
+                            controller.dataP.emailToko,
+                            controller.jumlahProduk.value,
+                            controller.size.value,
+                          );
                           Get.toNamed(Routes.CHECKOUT, arguments: [
-                            controller.dataP,
+                            controller.dataP.idProduk,
                             dataT,
                             controller.size,
                             controller.jumlahProduk,
+                            controller.dataP,
+                            subproduk,
                           ]);
                         },
                         child: Text(
@@ -468,8 +479,16 @@ class DetailprodukView extends GetView<DetailprodukController> {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () async {
-                          Map<String, dynamic> hasil = await controller
-                              .keranjang(controller.dataP.idProduk!);
+                          Map<String, dynamic> hasil =
+                              await controller.keranjang(
+                            controller.dataP.idProduk!,
+                            controller.dataP.emailToko,
+                            dataT["alamat"]["idKota"],
+                            dataT["nama"],
+                            controller.jumlahProduk.value,
+                            controller.size.value,
+                            controller.dataP.berat,
+                          );
                           if (hasil["error"]) {
                             Get.snackbar("Gagal", hasil["message"]);
                           } else {
