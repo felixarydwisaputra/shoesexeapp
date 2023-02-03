@@ -242,21 +242,22 @@ class PesanantokoView extends GetView<PesanantokoController> {
                                                         .isLoading.isFalse) {
                                                       controller
                                                           .isLoading(true);
+                                                      await Future.delayed(
+                                                          Duration(seconds: 3));
+                                                      Get.back();
+                                                      Get.back();
                                                       Map<String, dynamic>
                                                           hasil =
                                                           await controller
                                                               .kirimpesan(pesanan[
                                                                       index][
                                                                   "id_pemesanan"]);
-                                                      await Future.delayed(
-                                                          Duration(seconds: 2));
+
                                                       controller
                                                           .isLoading(false);
                                                       if (hasil["error"]) {
                                                         Get.back();
                                                       } else {
-                                                        Get.back();
-                                                        Get.back();
                                                         Get.snackbar("Berhasil",
                                                             hasil["message"]);
                                                       }

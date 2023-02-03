@@ -319,6 +319,39 @@ class CheckoutView extends GetView<CheckoutController> {
                                                               ProdukData.fromJson(
                                                                   snapshot.data!
                                                                       .data()!);
+                                                          controller
+                                                              .listTransaksi
+                                                              .addAll({
+                                                            "id_produk":
+                                                                dataDetail?[
+                                                                        index][
+                                                                    "id_produk"],
+                                                            "nama_produk":
+                                                                produk
+                                                                    .namaProduk,
+                                                            "emailtoko":
+                                                                dataP[index]
+                                                                    ["id_toko"],
+                                                            "nama_toko":
+                                                                dataP[index]
+                                                                    ["toko"],
+                                                            "berat":
+                                                                produk.berat,
+                                                            "harga":
+                                                                produk.harga,
+                                                            "jumlah":
+                                                                dataDetail?[
+                                                                        index]
+                                                                    ["jumlah"],
+                                                            "size": dataDetail?[
+                                                                index]["size"],
+                                                            "pemesan":
+                                                                controller
+                                                                        .dataU[
+                                                                    "email"],
+                                                            "alamat":
+                                                                "${controller.dataU["alamat"]["address"]} ${controller.dataU["alamat"]["kota"]} ${controller.dataU["alamat"]["prov"]}"
+                                                          });
                                                           return Container(
                                                             height: 70,
                                                             child: Row(
@@ -814,6 +847,8 @@ class CheckoutView extends GetView<CheckoutController> {
                                             controller.biayapenanganan.value !=
                                                 0) {
                                           controller.isloading.value = true;
+                                          await controller.transaksi();
+                                          await controller.pesanantoko();
                                           await Future.delayed(
                                               Duration(seconds: 3));
                                           Get.dialog(
@@ -892,80 +927,6 @@ class CheckoutView extends GetView<CheckoutController> {
                                           Get.snackbar("Gagal",
                                               "Data transaksi tidak boleh kosong");
                                         }
-
-                                        // Get.defaultDialog(
-                                        //     barrierDismissible: false,
-                                        //     title: "",
-                                        //     backgroundColor: kesatu,
-                                        //     content: GestureDetector(
-                                        //       onTap: () {
-                                        //         Get.back();
-                                        //         Get.back();
-                                        //       },
-                                        //       child: Container(
-                                        //         padding: EdgeInsets.only(
-                                        //             bottom: 17,
-                                        //             left: 15,
-                                        //             right: 15),
-                                        //         height: Get.height * 0.5,
-                                        //         width: double.infinity,
-                                        //         color: kesatu,
-                                        //         child: Container(
-                                        //           decoration: BoxDecoration(
-                                        //               border: Border.all(
-                                        //                   color: keempat,
-                                        //                   width: 3),
-                                        //               borderRadius:
-                                        //                   BorderRadius.circular(
-                                        //                       20)),
-                                        //           child: Column(
-                                        //             children: [
-                                        //               Expanded(
-                                        //                   flex: 2,
-                                        //                   child: Container(
-                                        //                     child: Image.asset(
-                                        //                         "assets/logo/logosepatu.png"),
-                                        //                   )),
-                                        //               Expanded(
-                                        //                   child: Container(
-                                        //                 child: Text(
-                                        //                   "Terima kasih sudah berbelanja",
-                                        //                   textAlign:
-                                        //                       TextAlign.center,
-                                        //                   style: GoogleFonts
-                                        //                       .poppins(
-                                        //                           color:
-                                        //                               keempat,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w600,
-                                        //                           fontSize: 20,
-                                        //                           fontStyle:
-                                        //                               FontStyle
-                                        //                                   .italic),
-                                        //                 ),
-                                        //               )),
-                                        //               Expanded(
-                                        //                   child: Container(
-                                        //                 child: Text(
-                                        //                   "Shoes.exe",
-                                        //                   style: GoogleFonts
-                                        //                       .poppins(
-                                        //                           color:
-                                        //                               keempat,
-                                        //                           fontWeight:
-                                        //                               FontWeight
-                                        //                                   .w400,
-                                        //                           fontSize: 12),
-                                        //                 ),
-                                        //                 alignment:
-                                        //                     Alignment.center,
-                                        //               )),
-                                        //             ],
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ));
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: ketiga,

@@ -12,6 +12,7 @@ class PesanantokoController extends GetxController {
         .collection("toko")
         .doc(authC.auth.currentUser!.email)
         .collection("pesanan")
+        .orderBy("waktupesan", descending: true)
         .snapshots();
   }
 

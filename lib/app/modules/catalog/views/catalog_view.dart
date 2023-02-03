@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoesexe/app/data/models/data_produk.dart';
-import 'package:shoesexe/app/data/models/toko.dart';
-import 'package:shoesexe/app/modules/detailproduk/controllers/detailproduk_controller.dart';
 import 'package:shoesexe/app/modules/homescreen/controllers/homescreen_controller.dart';
 import 'package:shoesexe/app/routes/app_pages.dart';
 import 'package:shoesexe/warna.dart';
@@ -132,7 +129,7 @@ class CatalogView extends GetView<CatalogController> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
-                                              width: Get.width * 0.6,
+                                              width: Get.width * 0.5,
                                               child: Text(
                                                 "${controller.dataP[index].namaProduk}",
                                                 style: GoogleFonts.poppins(
@@ -143,11 +140,17 @@ class CatalogView extends GetView<CatalogController> {
                                                 overflow: TextOverflow.ellipsis,
                                               ),
                                             ),
-                                            Text(
-                                              "${controller.dataP[index].harga.toString().substring(0, 3)}K",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w700),
+                                            Expanded(
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "${homeC.rupiah.format(controller.dataP[index].harga)}",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 10,
+                                                      fontWeight:
+                                                          FontWeight.w700),
+                                                ),
+                                              ),
                                             )
                                           ],
                                         ),

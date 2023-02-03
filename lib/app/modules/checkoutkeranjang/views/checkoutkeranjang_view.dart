@@ -228,7 +228,7 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: dataP.length,
-                        itemBuilder: (context, index) {
+                        itemBuilder: (context, index1) {
                           return Column(
                             children: [
                               Container(
@@ -281,37 +281,31 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                     Map<String, dynamic>>>(
                                             future: controller.dataProduk(
                                                 authC.auth.currentUser!.email!,
-                                                dataP[index]["id_toko"]),
-                                            builder: (context, snap) {
-                                              if (snap.connectionState ==
+                                                dataP[index1]["id_toko"]),
+                                            builder: (context, snappro) {
+                                              if (snappro.connectionState ==
                                                   ConnectionState.done) {
-                                                var dataDetail =
-                                                    snap.data?.docs;
-
+                                                var data = snappro.data!.docs;
                                                 return ListView.builder(
                                                   shrinkWrap: true,
                                                   physics:
                                                       NeverScrollableScrollPhysics(),
-                                                  itemCount:
-                                                      snap.data!.docs.length,
+                                                  itemCount: data.length,
                                                   itemBuilder:
-                                                      (context, index) {
+                                                      (context, index2) {
                                                     // MENGAMBIL DETAIL PRODUK
-                                                    return StreamBuilder<
-                                                        DocumentSnapshot<
-                                                            Map<String,
-                                                                dynamic>>>(
-                                                      stream: controller
-                                                          .detailProduk(
-                                                              dataDetail?[index]
-                                                                  [
-                                                                  "id_produk"]),
+
+                                                    return FutureBuilder(
+                                                      future: controller
+                                                          .detailProduk(data[
+                                                                  index2]
+                                                              ["id_produk"]),
                                                       builder:
                                                           (context, snapshot) {
                                                         if (snapshot
                                                                 .connectionState ==
                                                             ConnectionState
-                                                                .active) {
+                                                                .done) {
                                                           ProdukData produk =
                                                               ProdukData.fromJson(
                                                                   snapshot.data!
@@ -321,23 +315,22 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                             "nama": produk
                                                                 .namaProduk,
                                                             "namatoko":
-                                                                dataP[index]
+                                                                dataP[index1]
                                                                     ["toko"],
                                                             "emailtoko":
-                                                                dataP[index]
+                                                                dataP[index1]
                                                                     ["id_toko"],
                                                             "berat":
                                                                 produk.berat,
                                                             "harga":
                                                                 produk.harga,
                                                             "jumlah":
-                                                                dataDetail?[
-                                                                        index]
+                                                                data[index2]
                                                                     ["jumlah"],
                                                             "id":
                                                                 produk.idProduk,
-                                                            "size": dataDetail?[
-                                                                index]["size"],
+                                                            "size": data[index2]
+                                                                ["size"],
                                                             "pemesan":
                                                                 controller
                                                                         .dataU[
@@ -381,7 +374,7 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                                                 GoogleFonts.poppins(fontWeight: FontWeight.w600, fontSize: 12),
                                                                           ),
                                                                           Text(
-                                                                            "Size ${dataDetail?[index]["size"]}",
+                                                                            "Size ${data[index2]["size"]}",
                                                                             style: GoogleFonts.poppins(
                                                                                 fontWeight: FontWeight.w600,
                                                                                 fontSize: 10,
@@ -400,7 +393,7 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                                           right:
                                                                               5),
                                                                   child: Text(
-                                                                      "${dataDetail?[index]["jumlah"]} pcs",
+                                                                      "${data[index2]["jumlah"]} pcs",
                                                                       style: GoogleFonts.poppins(
                                                                           fontSize:
                                                                               10)),
@@ -429,7 +422,7 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 5),
                                           child: Text(
-                                            "${homeC.rupiah.format(dataP[index]["total"])}",
+                                            "${homeC.rupiah.format(dataP[index1]["total"])}",
                                             style: GoogleFonts.poppins(
                                                 fontWeight: FontWeight.w500,
                                                 fontSize: 12),
@@ -846,6 +839,7 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
 
                                           await Future.delayed(
                                               Duration(seconds: 3));
+
                                           Get.dialog(
                                               GestureDetector(
                                                 onTap: () {
@@ -887,29 +881,11 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                           height: 20,
                                                         ),
                                                         Container(
-                                                          child: Text(
-                                                            "Terimakasih telah berbelanja di shoesexe",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                                    fontSize:
-                                                                        20,
-                                                                    color:
-                                                                        keempat),
-                                                          ),
+                                                          child: Text("haalo"),
                                                         ),
                                                         SizedBox(
                                                           height: 40,
                                                         ),
-                                                        Text(
-                                                          "Shoes.exe",
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                                  color:
-                                                                      keempat,
-                                                                  fontSize: 14),
-                                                        )
                                                       ],
                                                     ),
                                                   ),

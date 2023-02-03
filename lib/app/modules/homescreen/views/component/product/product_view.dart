@@ -26,6 +26,7 @@ class ProductView extends GetView<HomescreenController> {
           snap.data.forEach((e) {
             dataP.add(e);
           });
+          print(dataP);
 
           return ListView.builder(
             shrinkWrap: true,

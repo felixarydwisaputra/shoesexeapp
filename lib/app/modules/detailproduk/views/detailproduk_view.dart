@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shoesexe/app/data/models/toko.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shoesexe/app/modules/homescreen/controllers/homescreen_controller.dart';
 import 'package:shoesexe/app/routes/app_pages.dart';
 import 'package:shoesexe/warna.dart';
@@ -37,23 +37,103 @@ class DetailprodukView extends GetView<DetailprodukController> {
                   ),
                 ),
                 actions: [
-                  Obx(
-                    () => Container(
-                        child: GestureDetector(
-                      onTap: () {
-                        controller.love.toggle();
-                      },
-                      child: controller.love.isTrue
-                          ? Image.asset(
-                              "assets/logo/love.png",
-                              color: Color.fromARGB(255, 255, 17, 0),
-                            )
-                          : Image.asset(
-                              "assets/logo/favorite.png",
-                              color: kedua,
+                  StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    stream: controller.produkfavorites(),
+                    builder: (context, snapshotfav) {
+                      if (snapshotfav.connectionState ==
+                          ConnectionState.active) {
+                        var dataFav = snapshotfav.data?.data();
+                        controller.love.value = dataFav?["fav"] ?? false;
+                        return Container(
+                          child: GestureDetector(
+                            onTap: () async {
+                              controller.love.toggle();
+                              // fungsi favorite
+                              if (controller.love.isTrue) {
+                                await controller.favorite(
+                                    controller.dataP.idProduk!,
+                                    dataT["email"],
+                                    dataT["logoUrl"]);
+                                Get.defaultDialog(
+                                    title: "Berhasil",
+                                    titleStyle: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                    content: Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 130,
+                                            alignment: Alignment.center,
+                                            width: 160,
+                                            child: Lottie.asset(
+                                                "assets/lotties/favorites.json"),
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          Text(
+                                              "Produk berhasil ditambahkan ke favorite kamu",
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 16))
+                                        ],
+                                      ),
+                                    ));
+                              } else if (controller.love.isFalse) {
+                                await controller
+                                    .hapusfavorite(controller.dataP.idProduk!);
+                                Get.defaultDialog(
+                                    title: "Menghapus favorite",
+                                    titleStyle: GoogleFonts.poppins(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500),
+                                    content: Container(
+                                      padding: EdgeInsets.all(20),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            height: 150,
+                                            alignment: Alignment.center,
+                                            width: 160,
+                                            child: Lottie.asset(
+                                                "assets/lotties/sad.json"),
+                                          ),
+                                          SizedBox(
+                                            height: 50,
+                                          ),
+                                          Text(
+                                              "Yahhhhh, produk dihapus dari favorite kamu",
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                  fontSize: 16))
+                                        ],
+                                      ),
+                                    ));
+                              }
+                            },
+                            child: Obx(
+                              () => Container(
+                                child: controller.love.isTrue
+                                    ? Image.asset(
+                                        "assets/logo/love.png",
+                                        color: Color.fromARGB(255, 255, 17, 0),
+                                      )
+                                    : Image.asset(
+                                        "assets/logo/favorite.png",
+                                        color: kedua,
+                                      ),
+                              ),
                             ),
-                    )),
-                  ),
+                          ),
+                        );
+                      }
+                      return SizedBox(
+                        height: 1,
+                      );
+                    },
+                  )
                 ],
                 title: Text(
                   'ShoesPlus',
@@ -443,8 +523,11 @@ class DetailprodukView extends GetView<DetailprodukController> {
                           await controller.belanja(
                             controller.dataP.idProduk!,
                             controller.dataP.emailToko,
+                            dataT["alamat"]["idKota"],
+                            dataT["nama"],
                             controller.jumlahProduk.value,
                             controller.size.value,
+                            controller.dataP.berat,
                           );
                           Get.toNamed(Routes.CHECKOUT, arguments: [
                             controller.dataP.idProduk,

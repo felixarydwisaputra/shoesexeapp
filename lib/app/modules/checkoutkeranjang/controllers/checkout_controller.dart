@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shoesexe/app/controllers/auth_controller.dart';
+import 'package:shoesexe/app/data/models/toko.dart';
 
 import '../../../data/models/data_produk.dart';
 
@@ -14,6 +15,7 @@ class CheckoutkeranjangController extends GetxController {
   RxBool isloading = false.obs;
   RxBool enableBank = false.obs;
   RxString kurir = "".obs;
+  ProdukData produk = ProdukData();
   List<Map<String, dynamic>> listproduk = [];
 
   var subproduk = Get.arguments[0];
@@ -31,27 +33,29 @@ class CheckoutkeranjangController extends GetxController {
 // FUNGSI CHECKOUT
   Future<Map<String, dynamic>> transaksi() async {
     CollectionReference users = firestore.collection("users");
-    final batch = firestore.batch();
+    WriteBatch batch = firestore.batch();
 
     try {
-      for (var i = 0; i < listproduk.length; i++) {
-        batch.set(
-            users
-                .doc(dataU["email"])
-                .collection("transaksi")
-                .doc("${DateTime.now().toIso8601String()}"),
-            {
-              "waktupesan": DateTime.now().toIso8601String(),
-              "id_produk": listproduk[i]["id"],
-              "nama_produk": listproduk[i]["nama"],
-              "emailtoko": listproduk[i]["emailtoko"],
-              "nama_toko": listproduk[i]["namatoko"],
-              "berat": listproduk[i]["berat"],
-              "harga": listproduk[i]["harga"],
-              "jumlah": listproduk[i]["jumlah"],
-              "size": listproduk[i]["size"],
-            });
-      }
+      listproduk.forEach((element) {
+        int id = 304950394 + Random().nextInt(304950395);
+        var doc = firestore
+            .collection("users")
+            .doc(dataU["email"])
+            .collection("transaksi")
+            .doc("${id}")
+            .set({
+          "waktupesan": DateTime.now().toIso8601String(),
+          "id_produk": element["id"],
+          "nama_produk": element["nama"],
+          "emailtoko": element["emailtoko"],
+          "nama_toko": element["namatoko"],
+          "berat": element["berat"],
+          "harga": element["harga"],
+          "jumlah": element["jumlah"],
+          "size": element["size"],
+        });
+      });
+
       await batch.commit();
 
       return {"error": false, "message": "Berhasil"};
@@ -68,10 +72,10 @@ class CheckoutkeranjangController extends GetxController {
   Future<Map<String, dynamic>> pesanantoko() async {
     CollectionReference toko = firestore.collection("toko");
     final batch = firestore.batch();
-    int id = 812398 + Random().nextInt(812399);
 
     try {
       for (var i = 0; i < listproduk.length; i++) {
+        int id = 812398 + Random().nextInt(812399);
         batch.set(
             toko
                 .doc("${listproduk[i]["emailtoko"]}")
@@ -89,12 +93,6 @@ class CheckoutkeranjangController extends GetxController {
               "jumlah": listproduk[i]["jumlah"],
               "size": listproduk[i]["size"],
             });
-        final jum =
-            firestore.collection("produk").doc("${listproduk[i]["id"]}").get();
-        print(jum.then((value) {
-          firestore.collection("produk").doc("${listproduk[i]["id"]}").update(
-              {"stok": value.data()?["stok"] - listproduk[i]["jumlah"]});
-        }));
       }
       await batch.commit();
 
@@ -142,10 +140,13 @@ class CheckoutkeranjangController extends GetxController {
     return data.get();
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> detailProduk(
-      String id) async* {
+  Future<DocumentSnapshot<Map<String, dynamic>>> detailProduk(String id) async {
     final data = await firestore.collection("produk").doc(id);
-    yield* data.snapshots();
+    return data.get();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> coba(String id) async* {
+    yield* firestore.collection("produk").doc(id).snapshots();
   }
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> dataUser(String email) async* {

@@ -2,10 +2,10 @@ name: shoesexe
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
-  sdk: '>=2.18.6 <3.0.0'
+environment:
+  sdk: ">=2.18.6 <3.0.0"
 
-dependencies: 
+dependencies:
   cupertino_icons: ^1.0.2
   get: 4.6.5
   lottie: 2.1.0
@@ -23,18 +23,17 @@ dependencies:
   dio: 4.0.6
   image_picker: 0.8.6+1
   firebase_storage: 11.0.10
-  flutter: 
+  flutter:
     sdk: flutter
 
-dev_dependencies: 
-  flutter_test: 
+dev_dependencies:
+  flutter_test:
     sdk: flutter
 
-flutter: 
-  assets: 
+flutter:
+  assets:
     - assets/logo/
     - assets/lotties/
     - assets/images/
     - assets/produk/
   uses-material-design: true
-

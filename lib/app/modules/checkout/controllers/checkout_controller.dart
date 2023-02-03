@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,8 @@ class CheckoutController extends GetxController {
   ProdukData dataP = Get.arguments[4];
   int subproduk = Get.arguments[5];
   late Map<String, dynamic> dataU;
+
+  Map<String, dynamic> listTransaksi = {};
 
   // CHECKOUT
   RxInt totalongkir = 0.obs;
@@ -74,6 +77,81 @@ class CheckoutController extends GetxController {
   // UBAH ALAMAT
   TextEditingController phoneC = TextEditingController();
   TextEditingController alamatC = TextEditingController();
+
+  // FUNGSI TRANSAKSI TUNGGAL
+  Future transaksi() async {
+    int id = 234920948 + Random().nextInt(234920949);
+
+    try {
+      await firestore
+          .collection("users")
+          .doc(dataU["email"])
+          .collection("transaksi")
+          .doc("${id}")
+          .set({
+        "waktupesan": DateTime.now().toIso8601String(),
+        "id_produk": listTransaksi["id_produk"],
+        "nama_produk": listTransaksi["nama_produk"],
+        "emailtoko": listTransaksi["emailtoko"],
+        "nama_toko": listTransaksi["nama_toko"],
+        "berat": listTransaksi["berat"],
+        "harga": listTransaksi["harga"],
+        "jumlah": listTransaksi["jumlah"],
+        "size": listTransaksi["size"],
+      });
+
+      await firestore
+          .collection("users")
+          .doc(dataU["email"])
+          .collection("belanja")
+          .doc(listTransaksi["emailtoko"])
+          .collection("produk")
+          .doc(id_produk)
+          .delete();
+
+      await firestore
+          .collection("users")
+          .doc(dataU["email"])
+          .collection("belanja")
+          .doc(listTransaksi["emailtoko"])
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  // FUNGSI PESANANTOKO
+  Future<Map<String, dynamic>> pesanantoko() async {
+    CollectionReference toko = firestore.collection("toko");
+    int id = 812398 + Random().nextInt(812399);
+
+    try {
+      await toko
+          .doc(listTransaksi["emailtoko"])
+          .collection("pesanan")
+          .doc("${id}")
+          .set({
+        "waktupesan": DateTime.now().toIso8601String(),
+        "id_pemesanan": id.toString(),
+        "id_produk": listTransaksi["id_produk"],
+        "nama_produk": listTransaksi["nama_produk"],
+        "pemesan": listTransaksi["pemesan"],
+        "alamat": listTransaksi["alamat"],
+        "berat": listTransaksi["berat"],
+        "harga": listTransaksi["harga"],
+        "jumlah": listTransaksi["jumlah"],
+        "size": listTransaksi["size"],
+      });
+
+      return {"error": false, "message": "Berhasil"};
+    } catch (e) {
+      print(e);
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
 
   // TOTAL ONGKIR
   void totalOngkir(

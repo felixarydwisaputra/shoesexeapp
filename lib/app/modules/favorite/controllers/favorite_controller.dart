@@ -1,23 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:shoesexe/app/controllers/auth_controller.dart';
 
 class FavoriteController extends GetxController {
-  //TODO: Implement FavoriteController
+  AuthController authC = Get.find<AuthController>();
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  Stream<QuerySnapshot<Map<String, dynamic>>> favorite() async* {
+    final data = await firestore
+        .collection("users")
+        .doc(authC.auth.currentUser!.email)
+        .collection("favorites");
+    yield* data.snapshots();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

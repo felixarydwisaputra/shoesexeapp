@@ -235,187 +235,12 @@ class HomescreenController extends GetxController
         .snapshots();
   }
 
-  // CHECKOUT DARI KERANJANG
-  Future<Map<String, dynamic>> belanja(
-      String id_produk, id_toko, int jumlah, ukuran, harga
-      // String id_toko
-      ) async {
-    try {
-      CollectionReference users = firestore.collection("users");
-
-      await users
-          .doc(authC.auth.currentUser!.email)
-          .collection("belanja")
-          .doc(id_toko)
-          .set({
-        "createdAt": DateTime.now().toIso8601String(),
-        "id_toko": id_toko,
-      });
-
-      await users
-          .doc(authC.auth.currentUser!.email)
-          .collection("belanja")
-          .doc(id_toko)
-          .collection("produk")
-          .doc(id_produk)
-          .set({
-        "id_produk": id_produk,
-        "createdAt": DateTime.now().toIso8601String(),
-        "id_toko": id_toko,
-        "jumlah": jumlah,
-        "size": ukuran,
-        "harga": harga
-      });
-
-      return {
-        "error": false,
-        "message": "Produk sedang diproses",
-      };
-    } catch (e) {
-      return {
-        "error": true,
-        "message": e.toString(),
-      };
-    }
-  }
-
-  // FUNGSI HARGA
-
   // DUMMY DATA PERCOBAAN
-
-  List<Map<String, dynamic>> favorite = [
-    {
-      "id": 1,
-      "foto": "assets/produk/4.png",
-      "produk": "NIKE Air Jordan High Retro",
-      "harga": 532000,
-      "size": 43,
-    },
-    {
-      "id": 2,
-      "foto": "assets/produk/8.png",
-      "produk": "NIKE Air Running White",
-      "harga": 712000,
-      "size": 45,
-    },
-    {
-      "id": 3,
-      "foto": "assets/produk/7.png",
-      "produk": "NIKE Jordan Vol 1.2",
-      "harga": 520000,
-      "size": 41,
-    },
-    {
-      "id": 4,
-      "foto": "assets/produk/13.png",
-      "produk": "ADIDAS Shoes High Running",
-      "harga": 443000,
-      "size": 40,
-    },
-  ];
-
-  List<String> fotoLogo = [
-    "assets/logo/adidasa.png",
-    "assets/logo/converse.png",
-    "assets/logo/lgpuma.png",
-    "assets/logo/nb.png",
-    "assets/logo/reebok.png",
-    "assets/logo/vans.png",
-    "assets/logo/nike.png",
-  ];
-
   List<String> poster = [
     "assets/images/poster1.png",
     "assets/images/poster2.jpg",
     "assets/images/poster3.png",
   ];
-
-  List<Map<String, dynamic>> produk = [
-    {
-      "produk": "",
-      "foto": "assets/produk/1.png",
-      "harga": 500000,
-      "asal": "Jakarta",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/10.png",
-      "harga": 440000,
-      "asal": "Denpasar",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/2.png",
-      "harga": 545000,
-      "asal": "Denpasar",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/3.png",
-      "harga": 702000,
-      "asal": "Depok",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/4.png",
-      "harga": 620000,
-      "asal": "Bekasi",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/5.png",
-      "harga": 500000,
-      "asal": "Jakarta",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/6.png",
-      "harga": 500000,
-      "asal": "Pontianak",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/7.png",
-      "harga": 500000,
-      "asal": "Pontianak",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/8.png",
-      "harga": 500000,
-      "asal": "Jember",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/9.png",
-      "harga": 500000,
-      "asal": "Jakarta",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/10.png",
-      "harga": 500000,
-      "asal": "Jakarta",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/10.png",
-      "harga": 500000,
-      "asal": "Denpasar",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/7.png",
-      "harga": 500000,
-      "asal": "Garut",
-    },
-    {
-      "produk": "NIKE Air Jordan Ke ",
-      "foto": "assets/produk/13.png",
-      "harga": 500000,
-      "asal": "Bekasi",
-    },
-  ] as List<Map<String, dynamic>>;
 
 // DINAMIS APPBAR JUDUl
   String titleAppbar() {
@@ -427,5 +252,19 @@ class HomescreenController extends GetxController
       judulAppbar = "Favorites";
     }
     return judulAppbar;
+  }
+
+  // FUNGSI FAVORITES
+  Stream<QuerySnapshot<Map<String, dynamic>>> favorites() async* {
+    yield* firestore
+        .collection("users")
+        .doc(authC.auth.currentUser!.email)
+        .collection("favorites")
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> detailFav(
+      String id_produk) async* {
+    yield* firestore.collection("produk").doc(id_produk).snapshots();
   }
 }

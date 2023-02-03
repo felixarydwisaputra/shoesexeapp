@@ -25,15 +25,7 @@ class MyApp extends StatelessWidget {
   final homeC = Get.put(HomescreenController());
   @override
   Widget build(BuildContext context) {
-    return
-        // GetMaterialApp(
-        //   debugShowCheckedModeBanner: false,
-        //   title: "Shoes Application",
-        //   initialRoute: Routes.HOMESCREEN,
-        //   getPages: AppPages.routes,
-        // );
-
-        StreamBuilder<User?>(
+    return StreamBuilder<User?>(
       stream: authC.streamAuthStatus,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
