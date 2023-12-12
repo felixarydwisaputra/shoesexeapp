@@ -162,17 +162,6 @@ class SingupView extends GetView<SingupController> {
           keyboardType: TextInputType.visiblePassword,
           decoration: InputDecoration(
             fillColor: Colors.grey.shade300,
-            suffixIcon: Container(
-              margin: EdgeInsets.only(right: 10),
-              child: InkWell(
-                child: Image.asset(controller.seepass.isTrue
-                    ? "assets/logo/eyeclose.png"
-                    : "assets/logo/eye.png"),
-                onTap: () {
-                  controller.seepass.toggle();
-                },
-              ),
-            ),
             filled: true,
             label: Center(
                 child: Text(
@@ -261,7 +250,7 @@ class SingupView extends GetView<SingupController> {
         ),
         deskripsi,
         SizedBox(
-          height: 60,
+          height: 30,
         ),
         Container(
           margin: const EdgeInsets.only(right: 40, left: 40),
@@ -298,6 +287,9 @@ class SingupView extends GetView<SingupController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [regist, signin],
+        ),
+        SizedBox(
+          height: 40,
         )
       ],
     );

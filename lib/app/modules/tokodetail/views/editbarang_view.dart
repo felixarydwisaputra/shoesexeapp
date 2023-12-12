@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shoesexe/app/modules/homescreen/controllers/homescreen_controller.dart';
+import 'package:shoesexe/app/modules/homestore/controllers/homestore_controller.dart';
 import 'package:shoesexe/app/routes/app_pages.dart';
 
 import '../../../../warna.dart';
@@ -11,6 +12,8 @@ import '../controllers/editbarang_controller.dart';
 
 class EditbarangView extends GetView<EditbarangController> {
   HomescreenController homeC = Get.find<HomescreenController>();
+  HomestoreController storeC = Get.find<HomestoreController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +36,7 @@ class EditbarangView extends GetView<EditbarangController> {
           '${controller.produk.namaProduk}',
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 25),
+          style: GoogleFonts.poppins(fontWeight: FontWeight.w700, fontSize: 15),
         ),
         centerTitle: true,
       ),
@@ -49,7 +52,7 @@ class EditbarangView extends GetView<EditbarangController> {
               // foto produk
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 20),
-                  height: Get.height * 0.30,
+                  height: Get.height * 0.35,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -101,7 +104,7 @@ class EditbarangView extends GetView<EditbarangController> {
               // description produk
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                height: Get.height * 0.27,
+                height: Get.height * 0.35,
                 width: double.infinity,
                 child: Column(
                   children: [
@@ -161,7 +164,7 @@ class EditbarangView extends GetView<EditbarangController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Nike"),
+                              Text("${storeC.namatoko.value}"),
                               SizedBox(
                                 height: 5,
                               ),
@@ -241,7 +244,7 @@ class EditbarangView extends GetView<EditbarangController> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1,
-                      fontSize: 16,
+                      fontSize: 13,
                       color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -280,18 +283,18 @@ class EditbarangView extends GetView<EditbarangController> {
                             child: Image.asset("assets/logo/logosepatu.png"),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Container(
                             child: Text(
                               "Ingin menghapus produk ini?",
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
-                                  fontSize: 20, color: keempat),
+                                  fontSize: 16, color: keempat),
                             ),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -310,10 +313,10 @@ class EditbarangView extends GetView<EditbarangController> {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(10)),
-                                    minimumSize: Size(100, 40)),
+                                    minimumSize: Size(80, 30)),
                               ),
                               SizedBox(
-                                width: 20,
+                                width: 10,
                               ),
                               ElevatedButton(
                                   onPressed: () async {
@@ -337,7 +340,7 @@ class EditbarangView extends GetView<EditbarangController> {
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(10)),
-                                      minimumSize: Size(100, 40)))
+                                      minimumSize: Size(80, 30)))
                             ],
                           ),
                           SizedBox(
@@ -346,7 +349,7 @@ class EditbarangView extends GetView<EditbarangController> {
                           Text(
                             "Shoes.exe",
                             style: GoogleFonts.poppins(
-                                color: keempat, fontSize: 14),
+                                color: keempat, fontSize: 10),
                           )
                         ],
                       ),
@@ -358,7 +361,7 @@ class EditbarangView extends GetView<EditbarangController> {
                   style: GoogleFonts.poppins(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1,
-                      fontSize: 16,
+                      fontSize: 13,
                       color: Colors.white),
                 ),
                 style: ElevatedButton.styleFrom(

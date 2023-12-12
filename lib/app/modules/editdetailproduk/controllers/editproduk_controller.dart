@@ -37,8 +37,8 @@ class EditprodukController extends GetxController {
     super.onInit();
   }
 
-  Future<Map<String, dynamic>> editProduk(
-      String namaC, warnaC, descC, bahanC, hargaC, beratC, stokC, idP) async {
+  Future<Map<String, dynamic>> editProduk(String namaC, warnaC, descC, bahanC,
+      hargaC, beratC, stokC, idP, photoUrl) async {
     CollectionReference docproduk = firestore.collection("produk");
 
     // UPLOAD IMAGE

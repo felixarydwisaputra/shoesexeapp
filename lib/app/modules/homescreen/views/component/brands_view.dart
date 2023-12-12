@@ -22,7 +22,7 @@ class BrandsView extends GetView<HomescreenController> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            height: Get.height * 0.09,
+            height: Get.height * 0.1,
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +80,7 @@ class BrandsView extends GetView<HomescreenController> {
                             ? Get.width * 0.24
                             : Get.width * 0.47,
                         decoration: BoxDecoration(
-                          border: Border.all(color: ketiga, width: 3),
+                          border: Border.all(color: ketiga, width: 2),
                           color: Color.fromARGB(255, 239, 239, 239),
                           borderRadius: BorderRadius.circular(20),
                         ),

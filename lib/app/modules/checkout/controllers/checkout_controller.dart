@@ -120,6 +120,41 @@ class CheckoutController extends GetxController {
     }
   }
 
+  // FUNGSI PESANAN
+  Future<Map<String, dynamic>> pesanan() async {
+    CollectionReference users = firestore.collection("users");
+    var est = etd.value.replaceAll("HARI", "");
+    try {
+      int id = 982734281 + Random().nextInt(982734282);
+      var doc = await firestore
+          .collection("users")
+          .doc(dataU["email"])
+          .collection("pesanan")
+          .doc("${id}")
+          .set({
+        "waktupesan": DateTime.now().toIso8601String(),
+        "id_produk": listTransaksi["id_produk"],
+        "id_pemesanan": id,
+        "nama_produk": listTransaksi["nama_produk"],
+        "emailtoko": listTransaksi["emailtoko"],
+        "nama_toko": listTransaksi["nama_toko"],
+        "berat": listTransaksi["berat"],
+        "harga": listTransaksi["harga"],
+        "jumlah": listTransaksi["jumlah"],
+        "size": listTransaksi["size"],
+        "etd": est,
+      });
+
+      return {"error": false, "message": "Berhasil"};
+    } catch (e) {
+      print(e);
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
+
   // FUNGSI PESANANTOKO
   Future<Map<String, dynamic>> pesanantoko() async {
     CollectionReference toko = firestore.collection("toko");
@@ -175,7 +210,7 @@ class CheckoutController extends GetxController {
       var hasil = data["rajaongkir"]["results"];
       totalongkir.value = hasil[0]["costs"][0]["cost"][0]["value"];
       etd.value = hasil[0]["costs"][0]["cost"][0]["etd"];
-      total.value = dataP.harga! + totalongkir.value + biayapenanganan.value;
+      total.value = subproduk + totalongkir.value + biayapenanganan.value;
     } catch (e) {
       Get.snackbar("Terjadi keslahan", e.toString());
     }
@@ -183,6 +218,6 @@ class CheckoutController extends GetxController {
 
   // TOTAL CHECKOUT
   void totalCheckout() {
-    total.value = dataP.harga! + totalongkir.value + biayapenanganan.value;
+    total.value = subproduk + totalongkir.value + biayapenanganan.value;
   }
 }

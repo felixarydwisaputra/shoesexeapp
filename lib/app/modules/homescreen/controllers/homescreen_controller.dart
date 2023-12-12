@@ -111,7 +111,10 @@ class HomescreenController extends GetxController
 
   //STREAM PRODUK
   Future dataProduk() async {
-    final produk = await firestore.collection("produk").get();
+    final produk = await firestore
+        .collection("produk")
+        .orderBy("createdAt", descending: true)
+        .get();
     return produk.docs.map((e) => ProdukData.fromJson(e.data())).toList();
   }
 

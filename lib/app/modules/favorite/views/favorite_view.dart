@@ -102,7 +102,7 @@ class FavoriteView extends GetView<FavoriteController> {
                               children: [
                                 Expanded(
                                     child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 20),
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
                                   width: double.infinity,
                                   child: Row(
                                     mainAxisAlignment:
@@ -124,7 +124,7 @@ class FavoriteView extends GetView<FavoriteController> {
                                   ),
                                 )),
                                 Expanded(
-                                    flex: 5,
+                                    flex: 7,
                                     child: Container(
                                         margin: EdgeInsets.only(
                                             bottom: 12, top: 15),
@@ -146,8 +146,10 @@ class FavoriteView extends GetView<FavoriteController> {
                                       width: double.infinity,
                                       child: Text(
                                         "${data[index]["nama_produk"]}",
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: GoogleFonts.poppins(
-                                            fontSize: 18,
+                                            fontSize: 14,
                                             letterSpacing: 1,
                                             fontWeight: FontWeight.w600),
                                       ),

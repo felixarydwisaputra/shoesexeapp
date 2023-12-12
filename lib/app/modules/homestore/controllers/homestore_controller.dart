@@ -10,6 +10,7 @@ import 'package:shoesexe/app/modules/detailproduk/bindings/detailproduk_binding.
 class HomestoreController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   late String photoUrl;
+  RxString namatoko = "".obs;
 
   Stream<QuerySnapshot<Map<String, dynamic>>> produkStream(String email) {
     return firestore

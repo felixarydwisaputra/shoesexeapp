@@ -44,7 +44,7 @@ class StoreView extends GetView<StoreController> {
               Column(
                 children: [
                   Container(
-                    height: Get.height * 0.32,
+                    height: Get.height * 0.38,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -167,7 +167,7 @@ class StoreView extends GetView<StoreController> {
                                                     alignment: Alignment.center,
                                                   ),
                                                   Container(
-                                                    height: Get.height * 0.05,
+                                                    height: Get.height * 0.06,
                                                     child: Text(
                                                       "${dataP.namaProduk}",
                                                       style:

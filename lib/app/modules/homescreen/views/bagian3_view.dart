@@ -83,7 +83,7 @@ class Bagian3View extends GetView<HomescreenController> {
                                       Expanded(
                                           child: Container(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
+                                            horizontal: 10),
                                         width: double.infinity,
                                         child: Row(
                                           mainAxisAlignment:
@@ -105,7 +105,7 @@ class Bagian3View extends GetView<HomescreenController> {
                                         ),
                                       )),
                                       Expanded(
-                                          flex: 5,
+                                          flex: 7,
                                           child: Container(
                                               margin: EdgeInsets.only(
                                                   bottom: 12, top: 15),
@@ -120,45 +120,49 @@ class Bagian3View extends GetView<HomescreenController> {
                                                 ),
                                               ))),
                                       Expanded(
-                                          flex: 3,
+                                          flex: 2,
                                           child: Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: 20, vertical: 5),
                                             width: double.infinity,
                                             child: Text(
                                               "${data[index]["nama_produk"]}",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                               style: GoogleFonts.poppins(
-                                                  fontSize: 18,
+                                                  fontSize: 14,
                                                   letterSpacing: 1,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           )),
                                       Expanded(
+                                          flex: 2,
                                           child: Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 20),
-                                        width: double.infinity,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "Size : ${data[index]["size"]}",
-                                              style: GoogleFonts.poppins(
-                                                  fontSize: 12),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            width: double.infinity,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  "Size : ${data[index]["size"]}",
+                                                  style: GoogleFonts.poppins(
+                                                      fontSize: 10),
+                                                ),
+                                                Container(
+                                                  width: 40,
+                                                  child: Image.asset(
+                                                    "assets/logo/love.png",
+                                                    color: Color.fromARGB(
+                                                        255, 255, 17, 0),
+                                                  ),
+                                                  alignment: Alignment.topRight,
+                                                ),
+                                              ],
                                             ),
-                                            Container(
-                                              width: 40,
-                                              child: Image.asset(
-                                                "assets/logo/love.png",
-                                                color: Color.fromARGB(
-                                                    255, 255, 17, 0),
-                                              ),
-                                              alignment: Alignment.topRight,
-                                            ),
-                                          ],
-                                        ),
-                                      )),
+                                          )),
                                     ],
                                   ),
                                 ),

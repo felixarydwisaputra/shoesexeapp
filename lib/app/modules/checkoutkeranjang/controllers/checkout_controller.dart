@@ -30,6 +30,46 @@ class CheckoutkeranjangController extends GetxController {
   RxInt total = 0.obs;
   RxString etd = "".obs;
 
+// FUNGSI BUAT PESANAN
+  Future<Map<String, dynamic>> pesanan() async {
+    CollectionReference users = firestore.collection("users");
+    WriteBatch batch = firestore.batch();
+    var est = etd.value.replaceAll("HARI", "");
+    try {
+      listproduk.forEach((element) {
+        int id = 982734281 + Random().nextInt(982734282);
+        var doc = firestore
+            .collection("users")
+            .doc(dataU["email"])
+            .collection("pesanan")
+            .doc("${id}")
+            .set({
+          "waktupesan": DateTime.now().toIso8601String(),
+          "id_produk": element["id"],
+          "id_pemesanan": id,
+          "nama_produk": element["nama"],
+          "emailtoko": element["emailtoko"],
+          "nama_toko": element["namatoko"],
+          "berat": element["berat"],
+          "harga": element["harga"],
+          "jumlah": element["jumlah"],
+          "size": element["size"],
+          "etd": est,
+        });
+      });
+
+      await batch.commit();
+
+      return {"error": false, "message": "Berhasil"};
+    } catch (e) {
+      print(e);
+      return {
+        "error": true,
+        "message": e.toString(),
+      };
+    }
+  }
+
 // FUNGSI CHECKOUT
   Future<Map<String, dynamic>> transaksi() async {
     CollectionReference users = firestore.collection("users");

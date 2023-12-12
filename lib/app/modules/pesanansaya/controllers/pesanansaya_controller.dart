@@ -10,7 +10,7 @@ class PesanansayaController extends GetxController {
     final data = await firestore
         .collection("users")
         .doc(authC.auth.currentUser!.email)
-        .collection("transaksi")
+        .collection("pesanan")
         .orderBy("waktupesan", descending: true);
     yield* data.snapshots();
   }
@@ -19,5 +19,14 @@ class PesanansayaController extends GetxController {
       String id_produk) async {
     var data = await firestore.collection("produk").doc(id_produk).get();
     return data;
+  }
+
+  Future terimapesanan(String id) async {
+    await firestore
+        .collection("users")
+        .doc(authC.auth.currentUser!.email)
+        .collection("pesanan")
+        .doc(id)
+        .delete();
   }
 }

@@ -26,7 +26,6 @@ class ProductView extends GetView<HomescreenController> {
           snap.data.forEach((e) {
             dataP.add(e);
           });
-          print(dataP);
 
           return ListView.builder(
             shrinkWrap: true,
@@ -70,8 +69,10 @@ class ProductView extends GetView<HomescreenController> {
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
                                 "${dataP[index].namaProduk}",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w700),
+                                    fontSize: 10, fontWeight: FontWeight.w700),
                               ),
                             )),
                         //harga produk
@@ -83,7 +84,7 @@ class ProductView extends GetView<HomescreenController> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w600, fontSize: 10),
+                                    fontWeight: FontWeight.w600, fontSize: 8),
                               ),
                             )),
                       ],

@@ -90,44 +90,6 @@ class UserView extends GetView<HomescreenController> {
       ),
     );
 
-    // final profile =
-
-    // final body = ListView(
-    //   children: <Widget>[
-    //     SizedBox(
-    //       height: 10,
-    //     ),
-    //     profile,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     user,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     button_keranjang,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     button_favorite,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     button_pesanan,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //     button_settting,
-    //     SizedBox(
-    //       height: 100,
-    //     ),
-    //     button_about,
-    //     SizedBox(
-    //       height: 20,
-    //     ),
-    //   ],
-    // );
-
     return Scaffold(
       body: Container(
         margin: const EdgeInsets.only(right: 20, left: 20, top: 10),

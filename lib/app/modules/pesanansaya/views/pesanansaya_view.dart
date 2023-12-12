@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -132,19 +133,24 @@ class PesanansayaView extends GetView<PesanansayaController> {
                                               Container(
                                                 padding: EdgeInsets.symmetric(
                                                     vertical: 15),
-                                                width: 160,
+                                                width: 150,
                                                 child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Container(
+                                                      width: 100,
+                                                      alignment:
+                                                          Alignment.centerLeft,
                                                       height: 50,
                                                       child: Text(
-                                                        "${detailP.namaProduk} asdsadasdad",
+                                                        "${detailP.namaProduk}",
                                                         style:
                                                             GoogleFonts.poppins(
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontSize: 14),
+                                                                fontSize: 10),
                                                       ),
                                                     ),
                                                     Expanded(
@@ -163,19 +169,23 @@ class PesanansayaView extends GetView<PesanansayaController> {
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .w600,
-                                                                fontSize: 12,
+                                                                fontSize: 8,
                                                               ),
                                                             ),
                                                             SizedBox(
-                                                              width: 15,
+                                                              width: 20,
                                                             ),
                                                             Container(
                                                                 child: Text(
                                                                     "${pesanan[index]["jumlah"]} pcs",
                                                                     style: GoogleFonts
                                                                         .poppins(
-                                                                      color: Colors
-                                                                          .grey,
+                                                                      color: Color
+                                                                          .fromARGB(
+                                                                              255,
+                                                                              0,
+                                                                              0,
+                                                                              0),
                                                                       fontSize:
                                                                           12,
                                                                     ))),
@@ -191,25 +201,113 @@ class PesanansayaView extends GetView<PesanansayaController> {
                                         ),
                                       )),
                                       Container(
-                                        alignment: Alignment.bottomRight,
                                         height: 40,
                                         width: double.infinity,
-                                        child: Container(
-                                          child: ElevatedButton(
-                                            onPressed: () {},
-                                            child: Text("Terima pesanan",
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              child: Text(
+                                                "Estimasi pengiriman : ${pesanan[index]["etd"]} hari",
                                                 style: GoogleFonts.poppins(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.w600)),
-                                            style: ElevatedButton.styleFrom(
-                                                backgroundColor: ketiga,
-                                                elevation: 5,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10))),
-                                          ),
+                                                    fontSize: 8),
+                                              ),
+                                            ),
+                                            Container(
+                                              child: ElevatedButton(
+                                                onPressed: () async {
+                                                  await Future.delayed(
+                                                      Duration(seconds: 2));
+                                                  Get.defaultDialog(
+                                                      title: "Beri penilaian",
+                                                      titleStyle:
+                                                          GoogleFonts.poppins(
+                                                              color: keempat),
+                                                      content: Container(
+                                                        child: Column(
+                                                          children: [
+                                                            Center(
+                                                                child: RatingBar
+                                                                    .builder(
+                                                              itemBuilder:
+                                                                  (context,
+                                                                      index) {
+                                                                return Icon(
+                                                                  Icons.star,
+                                                                  color: Colors
+                                                                      .amber,
+                                                                );
+                                                              },
+                                                              onRatingUpdate:
+                                                                  (value) {},
+                                                            )),
+                                                            SizedBox(
+                                                              height: 30,
+                                                            ),
+                                                            Container(
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await controller
+                                                                          .terimapesanan(
+                                                                              "${pesanan[index]["id_pemesanan"]}");
+                                                                      Get.back();
+                                                                    },
+                                                                    child: Text(
+                                                                      "Lewati",
+                                                                      style: GoogleFonts.poppins(
+                                                                          color:
+                                                                              keempat),
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 30,
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await controller
+                                                                          .terimapesanan(
+                                                                              "${pesanan[index]["id_pemesanan"]}");
+                                                                      Get.back();
+                                                                    },
+                                                                    child: Text(
+                                                                      "Kirim",
+                                                                      style: GoogleFonts.poppins(
+                                                                          color:
+                                                                              keempat),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ));
+                                                },
+                                                child: Text("Terima pesanan",
+                                                    style: GoogleFonts.poppins(
+                                                        fontSize: 8,
+                                                        fontWeight:
+                                                            FontWeight.w600)),
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: ketiga,
+                                                    elevation: 5,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10))),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       )
                                     ],

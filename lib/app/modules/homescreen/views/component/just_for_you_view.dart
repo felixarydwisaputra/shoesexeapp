@@ -9,13 +9,13 @@ class JustForYouView extends GetView<HomescreenController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height * 0.3,
+      height: Get.height * 0.35,
       width: double.infinity,
       child: Column(
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            height: Get.height * 0.09,
+            height: Get.height * 0.1,
             width: double.infinity,
             child: Text(
               "Just For You",
@@ -25,11 +25,11 @@ class JustForYouView extends GetView<HomescreenController> {
           ),
           Expanded(
             child: Container(
+              width: Get.width,
               child: CarouselSlider.builder(
                 itemCount: controller.poster.length,
                 options: CarouselOptions(
                   autoPlay: true,
-                  aspectRatio: 18 / 8,
                   enlargeCenterPage: true,
                 ),
                 itemBuilder: (context, index, realIndex) => Card(
@@ -38,8 +38,6 @@ class JustForYouView extends GetView<HomescreenController> {
                   ),
                   elevation: 3,
                   child: Container(
-                    height: Get.height * 0.3,
-                    width: double.infinity,
                     decoration: BoxDecoration(
                       color: Colors.grey,
                       borderRadius: BorderRadius.circular(20),

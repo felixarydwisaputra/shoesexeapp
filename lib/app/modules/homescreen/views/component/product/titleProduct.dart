@@ -20,7 +20,7 @@ class ProdukTitle extends GetView<HomescreenController> {
             if (data.length != 0) {
               return Container(
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                height: Get.height * 0.07,
+                height: Get.height * 0.1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

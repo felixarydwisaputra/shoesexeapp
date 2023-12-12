@@ -96,7 +96,7 @@ class HomescreenView extends GetView<HomescreenController> {
                 ),
                 bottomNavigationBar: Padding(
                   padding:
-                      EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 23),
+                      EdgeInsets.only(left: 20, top: 10, right: 20, bottom: 13),
                   child: Container(
                     height: Get.height * 0.08,
                     child: Column(
@@ -111,9 +111,9 @@ class HomescreenView extends GetView<HomescreenController> {
                             indicator: UnderlineTabIndicator(
                               insets: EdgeInsets.fromLTRB(
                                 53,
-                                40,
+                                30,
                                 53,
-                                53,
+                                43,
                               ),
                             ),
                             physics: NeverScrollableScrollPhysics(),

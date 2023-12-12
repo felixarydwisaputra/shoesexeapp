@@ -77,8 +77,6 @@ class PesanantokoView extends GetView<PesanantokoController> {
                 );
               } else {
                 return ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
                     itemCount: pesanan.length,
                     itemBuilder: (context, index) =>
                         FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -157,7 +155,7 @@ class PesanantokoView extends GetView<PesanantokoController> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              "Nama",
+                                                              "Pemesan",
                                                               style: GoogleFonts
                                                                   .poppins(
                                                                       fontSize:

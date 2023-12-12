@@ -94,11 +94,12 @@ class HomestoreView extends GetView<HomestoreController> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.active) {
             var dataT = snapshot.data?.data()!;
+            controller.namatoko.value = dataT?["nama"];
             return ListView(children: [
               Column(
                 children: [
                   Container(
-                    height: Get.height * 0.32,
+                    height: Get.height * 0.4,
                     width: double.infinity,
                     child: Column(
                       children: [
@@ -139,13 +140,13 @@ class HomestoreView extends GetView<HomestoreController> {
                               titleStyle: GoogleFonts.poppins(
                                   fontWeight: FontWeight.w600),
                               content: Container(
-                                height: 250,
+                                height: 270,
                                 child: Column(
                                   children: [
                                     GetBuilder<HomestoreController>(
                                         builder: (c) => dataT?["photoUrl"] != ""
                                             ? Container(
-                                                height: 150,
+                                                height: 170,
                                                 color: Colors.grey[200],
                                                 alignment: Alignment.center,
                                                 child: Image.network(
@@ -224,7 +225,7 @@ class HomestoreView extends GetView<HomestoreController> {
                                   alignment: Alignment.center,
                                   child: Text("no poster image"))
                               : Container(
-                                  height: Get.height * 0.254,
+                                  height: Get.height * 0.3,
                                   width: double.infinity,
                                   child: Image.network(
                                     "${dataT?["photoUrl"]}",
@@ -338,13 +339,13 @@ class HomestoreView extends GetView<HomestoreController> {
                                                   child: Container(
                                                       padding:
                                                           EdgeInsets.all(2),
-                                                      child: Text(
-                                                          "${dataT?["nama"]}")),
+                                                      child: Image.network(
+                                                          "${dataT?["logoUrl"]}")),
                                                   alignment:
                                                       Alignment.centerLeft,
                                                 ),
                                                 Container(
-                                                  height: Get.height * 0.12,
+                                                  height: Get.height * 0.10,
                                                   child: Container(
                                                     height: 90,
                                                     width: 120,
@@ -356,12 +357,13 @@ class HomestoreView extends GetView<HomestoreController> {
                                                   alignment: Alignment.center,
                                                 ),
                                                 Container(
-                                                  height: Get.height * 0.05,
+                                                  height: Get.height * 0.065,
                                                   child: Text(
                                                     "${dataP.namaProduk}",
                                                     style: GoogleFonts.poppins(
                                                         fontWeight:
-                                                            FontWeight.w600),
+                                                            FontWeight.w600,
+                                                        fontSize: 10),
                                                     maxLines: 2,
                                                     overflow:
                                                         TextOverflow.ellipsis,
@@ -391,7 +393,12 @@ class HomestoreView extends GetView<HomestoreController> {
                                                                 EdgeInsets.only(
                                                                     right: 15),
                                                             child: Text(
-                                                                "${dataP.harga.toString().substring(0, 3)}K"),
+                                                              "${dataP.harga.toString().substring(0, 4)}K",
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                      fontSize:
+                                                                          10),
+                                                            ),
                                                             alignment: Alignment
                                                                 .centerRight,
                                                           ),

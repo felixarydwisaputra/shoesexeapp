@@ -633,7 +633,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                   child: Text(
                                     "Pilih pembayaran (transfer bank)",
                                     style: GoogleFonts.poppins(
-                                        fontSize: 14,
+                                        fontSize: 10,
                                         color: hitam,
                                         fontWeight: FontWeight.w700),
                                     textAlign: TextAlign.center,
@@ -683,7 +683,7 @@ class CheckoutView extends GetView<CheckoutController> {
                                       Text(
                                         "Opsi pembayaran (transfer bank)",
                                         style: GoogleFonts.poppins(
-                                            fontSize: 10,
+                                            fontSize: 8,
                                             color: hitam,
                                             fontWeight: FontWeight.w500),
                                       ),
@@ -849,74 +849,71 @@ class CheckoutView extends GetView<CheckoutController> {
                                           controller.isloading.value = true;
                                           await controller.transaksi();
                                           await controller.pesanantoko();
+                                          await controller.pesanan();
                                           await Future.delayed(
                                               Duration(seconds: 3));
-                                          Get.dialog(
-                                              GestureDetector(
+                                          Get.defaultDialog(
+                                              backgroundColor: ketiga,
+                                              title: "",
+                                              content: GestureDetector(
                                                 onTap: () {
                                                   Get.back();
                                                   Get.back();
                                                 },
                                                 child: Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: 20,
+                                                    left: 20,
+                                                    right: 20,
+                                                  ),
                                                   decoration: BoxDecoration(
-                                                      color: kelima,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20)),
-                                                  margin: EdgeInsets.symmetric(
-                                                      vertical:
-                                                          Get.height * 0.2,
-                                                      horizontal: 30),
-                                                  child: Container(
-                                                    margin: EdgeInsets.all(20),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              15),
-                                                      border: Border.all(
-                                                          color: keempat,
-                                                          width: 2),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Container(
-                                                          height: 170,
-                                                          width: 170,
-                                                          child: Image.asset(
-                                                              "assets/logo/logosepatu.png"),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        ),
-                                                        Container(
-                                                          child: Text(
-                                                            "Terimakasih telah berbelanja di shoesexe",
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                                    fontSize:
-                                                                        20,
-                                                                    color:
-                                                                        keempat),
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 40,
-                                                        ),
-                                                        Text(
-                                                          "Shoes.exe",
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    border: Border.all(
+                                                        color: keempat,
+                                                        width: 2),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Container(
+                                                        height: 140,
+                                                        width: 140,
+                                                        child: Image.asset(
+                                                            "assets/logo/logosepatu.png"),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Container(
+                                                        child: Text(
+                                                          "Terimakasih telah berbelanja di shoesexe",
+                                                          textAlign:
+                                                              TextAlign.center,
                                                           style: GoogleFonts
                                                               .poppins(
+                                                                  fontSize: 14,
                                                                   color:
-                                                                      keempat,
-                                                                  fontSize: 14),
-                                                        )
-                                                      ],
-                                                    ),
+                                                                      keempat),
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      Text(
+                                                        "Shoes.exe",
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                color: keempat,
+                                                                fontSize: 10),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 30,
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -965,8 +962,11 @@ class CheckoutView extends GetView<CheckoutController> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 30,
+              ),
             ],
-          )
+          ),
         ],
       ),
     );

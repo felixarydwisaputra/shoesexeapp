@@ -73,7 +73,7 @@ class EditprodukView extends GetView<EditprodukController> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 10),
-                  height: Get.height * 0.66,
+                  height: Get.height * 0.75,
                   child: Column(
                     children: [
                       Card(
@@ -417,7 +417,8 @@ class EditprodukView extends GetView<EditprodukController> {
                                 child: Text(
                                   "FILE",
                                   style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   elevation: 5,
@@ -455,6 +456,9 @@ class EditprodukView extends GetView<EditprodukController> {
                                     controller.beratC.text.isNotEmpty &&
                                     controller.stokC.text.isNotEmpty) {
                                   controller.isLoading(true);
+                                  controller.photoUrl =
+                                      controller.produk.photoUrl!;
+
                                   // jalankan fungsi edit
                                   Map<String, dynamic> hasil =
                                       await controller.editProduk(
@@ -465,7 +469,8 @@ class EditprodukView extends GetView<EditprodukController> {
                                           controller.hargaC.text,
                                           controller.beratC.text,
                                           controller.stokC.text,
-                                          controller.produk.idProduk);
+                                          controller.produk.idProduk,
+                                          controller.photoUrl);
                                   controller.isLoading(false);
                                   if (hasil["error"]) {
                                     Get.snackbar(

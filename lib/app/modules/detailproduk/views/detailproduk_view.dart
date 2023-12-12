@@ -138,7 +138,7 @@ class DetailprodukView extends GetView<DetailprodukController> {
                 title: Text(
                   'ShoesPlus',
                   style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w700, fontSize: 25),
+                      fontWeight: FontWeight.w700, fontSize: 16),
                 ),
                 centerTitle: true,
               ),
@@ -155,7 +155,7 @@ class DetailprodukView extends GetView<DetailprodukController> {
                       Container(
                           padding: EdgeInsets.symmetric(
                               horizontal: 45, vertical: 20),
-                          height: Get.height * 0.30,
+                          height: Get.height * 0.35,
                           width: double.infinity,
                           decoration: BoxDecoration(
                             image: DecorationImage(
@@ -165,13 +165,17 @@ class DetailprodukView extends GetView<DetailprodukController> {
                                 alignment: Alignment.topCenter),
                           ),
                           child: Container(
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "${controller.dataP.photoUrl}")
-                                  // image: AssetImage("${controller.dataProduk.foto}"),
-                                  ),
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Container(
+                              width: 300,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.fitWidth,
+                                    image: NetworkImage(
+                                        "${controller.dataP.photoUrl}")
+                                    // image: AssetImage("${controller.dataProduk.foto}"),
+                                    ),
+                              ),
                             ),
                           )),
                       // nama produk & toko
@@ -212,7 +216,7 @@ class DetailprodukView extends GetView<DetailprodukController> {
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        height: Get.height * 0.29,
+                        height: Get.height * 0.33,
                         width: double.infinity,
                         child: Column(
                           children: [
@@ -226,6 +230,7 @@ class DetailprodukView extends GetView<DetailprodukController> {
                                   Text(
                                     "DESCRIPTION PRODUCT",
                                     style: GoogleFonts.poppins(
+                                        fontSize: 12,
                                         fontWeight: FontWeight.w700),
                                   ),
                                   ElevatedButton(
@@ -259,7 +264,7 @@ class DetailprodukView extends GetView<DetailprodukController> {
                             Row(
                               children: [
                                 Container(
-                                  width: 100,
+                                  width: 150,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
@@ -356,128 +361,106 @@ class DetailprodukView extends GetView<DetailprodukController> {
                             SizedBox(
                               height: 10,
                             ),
-                            Container(
-                              child: Expanded(
-                                  child: Container(
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 175,
-                                      child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: 7,
-                                        itemBuilder: (context, index) =>
-                                            GestureDetector(
-                                          onTap: () {
-                                            controller.select.value = index;
-                                            controller.size.value = index + 38;
-                                            print(controller.size);
-                                          },
-                                          child: Obx(
-                                            () => Container(
-                                              margin: EdgeInsets.symmetric(
-                                                  vertical: 2, horizontal: 2),
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    controller.select == index
-                                                        ? Colors.grey[500]
-                                                        : Colors.transparent,
-                                                border: Border.all(
-                                                    color: keempat, width: 2),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              child: Center(
-                                                  child: Text(
-                                                "${index + 38}",
-                                                style: GoogleFonts.poppins(
-                                                    fontWeight:
-                                                        FontWeight.w700),
-                                              )),
-                                              width: 40,
+                            Expanded(
+                                child: Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 175,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: 7,
+                                      itemBuilder: (context, index) =>
+                                          GestureDetector(
+                                        onTap: () {
+                                          controller.select.value = index;
+                                          controller.size.value = index + 38;
+                                          print(controller.size);
+                                        },
+                                        child: Obx(
+                                          () => Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 2, horizontal: 2),
+                                            decoration: BoxDecoration(
+                                              color: controller.select == index
+                                                  ? Colors.grey[500]
+                                                  : Colors.transparent,
+                                              border: Border.all(
+                                                  color: keempat, width: 2),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
                                             ),
+                                            child: Center(
+                                                child: Text(
+                                              "${index + 38}",
+                                              style: GoogleFonts.poppins(
+                                                  fontWeight: FontWeight.w700),
+                                            )),
+                                            width: 40,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    Expanded(
-                                      child: Container(
-                                        child: Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 10, vertical: 2),
-                                          decoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: Row(
-                                            children: [
-                                              // MINUS PRODUK
-                                              GestureDetector(
-                                                onTap: () {
-                                                  controller.kurangProduk();
-                                                },
-                                                child: Expanded(
-                                                    child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Container(
-                                                    margin: EdgeInsets.only(
-                                                      left: 18,
-                                                      right: 15,
-                                                    ),
-                                                    width: 10,
-                                                    height: 3,
-                                                    child: Image.asset(
-                                                      "assets/logo/min.png",
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                )),
-                                              ),
-                                              // JUMLAH PRODUK
-                                              Obx(
-                                                () => Expanded(
-                                                  child: Container(
-                                                    alignment: Alignment.center,
-                                                    child: Text(
-                                                      "${controller.jumlahProduk}",
-                                                      style: TextStyle(
-                                                          fontSize: 12),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              // TAMBAH PRODUK
-                                              Expanded(
-                                                  child: GestureDetector(
-                                                onTap: () {
-                                                  controller.tambahProduk();
-                                                },
-                                                child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 8,
-                                                            vertical: 3),
-                                                    width: 30,
-                                                    height: 20,
-                                                    child: Image.asset(
-                                                      "assets/logo/add.png",
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ))
-                                            ],
-                                          ),
-                                        ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[400],
+                                        borderRadius: BorderRadius.circular(30),
                                       ),
-                                    )
-                                  ],
-                                ),
-                              )),
-                            )
+                                      height: 50,
+                                      width: 200,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              controller.kurangProduk();
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              height: 20,
+                                              width: 20,
+                                              child: Image.asset(
+                                                  "assets/logo/min.png"),
+                                            ),
+                                          ),
+                                          Obx(
+                                            () => Container(
+                                              alignment: Alignment.center,
+                                              height: 40,
+                                              width: 30,
+                                              child: Text(
+                                                "${controller.jumlahProduk.value}",
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              controller.tambahProduk();
+                                            },
+                                            child: Container(
+                                              alignment: Alignment.center,
+                                              height: 20,
+                                              width: 20,
+                                              child: Image.asset(
+                                                  "assets/logo/add.png"),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ))
                           ],
                         ),
                       ),

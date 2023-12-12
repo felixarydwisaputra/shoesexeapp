@@ -216,7 +216,7 @@ class Bagian2View extends GetView<HomescreenController> {
                                                                             Container(
                                                                           padding: EdgeInsets.only(
                                                                               left: 10,
-                                                                              bottom: 15,
+                                                                              bottom: 5,
                                                                               top: 15,
                                                                               right: 15),
                                                                           child:
@@ -322,7 +322,7 @@ class Bagian2View extends GetView<HomescreenController> {
               return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Container(
-                    height: Get.height * 0.07,
+                    height: Get.height * 0.08,
                     child: Column(
                       children: [
                         Container(

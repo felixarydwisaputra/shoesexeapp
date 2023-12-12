@@ -236,7 +236,7 @@ class KeranjangView extends GetView<KeranjangController> {
                                                                             left:
                                                                                 10,
                                                                             bottom:
-                                                                                15,
+                                                                                5,
                                                                             top:
                                                                                 15,
                                                                             right:
@@ -340,7 +340,7 @@ class KeranjangView extends GetView<KeranjangController> {
               return Padding(
                   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Container(
-                    height: Get.height * 0.07,
+                    height: Get.height * 0.08,
                     child: Column(
                       children: [
                         Container(
@@ -386,8 +386,11 @@ class KeranjangView extends GetView<KeranjangController> {
                                           if (data.length != 0) {
                                             Get.toNamed(
                                                 Routes.CHECKOUTKERANJANG,
-                                                arguments:
-                                                    totalK?["totalkeranjang"]);
+                                                arguments: [
+                                                  totalK?["totalkeranjang"],
+                                                  data[0]["idKota"],
+                                                  totalK?["totalberatproduk"],
+                                                ]);
                                           } else {
                                             Get.snackbar("Belum ada produk",
                                                 "Ayo tambahkan produk ke keranjang");

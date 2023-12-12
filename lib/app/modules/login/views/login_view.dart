@@ -50,14 +50,14 @@ class LoginView extends GetView<LoginController> {
           focusColor: Colors.black,
           fillColor: Colors.grey.shade300,
           filled: true,
-          label: Center(
-              child: Text(
+          label: Text(
             'Enter Your Email',
+            textAlign: TextAlign.start,
             style: GoogleFonts.poppins(
-                fontSize: 14,
+                fontSize: 12,
                 color: Colors.grey[700],
                 fontWeight: FontWeight.w500),
-          )),
+          ),
           contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10.0),
@@ -77,7 +77,7 @@ class LoginView extends GetView<LoginController> {
       margin: const EdgeInsets.only(right: 40, left: 40),
       child: Obx(
         () => TextFormField(
-          validator: (val) => val!.isEmpty ? 'Enter Email' : null,
+          validator: (val) => val!.isEmpty ? 'Enter Pass' : null,
           controller: controller.passC,
           cursorColor: Colors.grey.shade800,
           keyboardType: TextInputType.visiblePassword,
@@ -85,7 +85,17 @@ class LoginView extends GetView<LoginController> {
           decoration: InputDecoration(
             fillColor: Colors.grey.shade300,
             filled: true,
+            label: Text(
+              'Enter Your Pass',
+              textAlign: TextAlign.start,
+              style: GoogleFonts.poppins(
+                  fontSize: 12,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w500),
+            ),
             suffixIcon: Container(
+              height: 10,
+              width: 10,
               margin: EdgeInsets.only(right: 10),
               child: InkWell(
                 child: Image.asset(controller.seepass.isTrue
@@ -96,15 +106,8 @@ class LoginView extends GetView<LoginController> {
                 },
               ),
             ),
-            label: Center(
-                child: Text(
-              'Enter Your Password',
-              style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  color: Colors.grey[700],
-                  fontWeight: FontWeight.w500),
-            )),
-            contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+            contentPadding:
+                EdgeInsets.only(left: 40.0, top: 10.0, bottom: 10.0),
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(color: Colors.grey.shade800)),
@@ -230,11 +233,11 @@ class LoginView extends GetView<LoginController> {
         ),
         login,
         SizedBox(
-          height: 30,
+          height: 10,
         ),
         deskripsi,
         SizedBox(
-          height: 60,
+          height: 30,
         ),
         email,
         SizedBox(

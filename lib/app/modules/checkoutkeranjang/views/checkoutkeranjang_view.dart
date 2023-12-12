@@ -836,7 +836,8 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                               await controller.transaksi();
                                           Map<String, dynamic> pesan =
                                               await controller.pesanantoko();
-
+                                          Map<String, dynamic> pesansaya =
+                                              await controller.pesanan();
                                           await Future.delayed(
                                               Duration(seconds: 3));
 
@@ -881,7 +882,33 @@ class CheckoutkeranjangView extends GetView<CheckoutkeranjangController> {
                                                           height: 20,
                                                         ),
                                                         Container(
-                                                          child: Text("haalo"),
+                                                          child: Text(
+                                                            "Terimakasih telah berbelanja di Shoesexe",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color:
+                                                                        keempat),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 25,
+                                                        ),
+                                                        Container(
+                                                          child: Text(
+                                                            "shoesexe",
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                                    fontSize:
+                                                                        14,
+                                                                    color:
+                                                                        keempat),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
                                                         ),
                                                         SizedBox(
                                                           height: 40,

@@ -52,7 +52,7 @@ class TambahbarangView extends GetView<TambahbarangController> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 65, vertical: 5),
-                  height: Get.height * 0.235,
+                  height: Get.height * 0.28,
                   child: GetBuilder<TambahbarangController>(
                     builder: (c) => c.image != null
                         ? Column(
@@ -90,7 +90,7 @@ class TambahbarangView extends GetView<TambahbarangController> {
                 ),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 45, vertical: 5),
-                  height: Get.height * 0.66,
+                  height: Get.height * 0.75,
                   child: Column(
                     children: [
                       Card(
@@ -428,7 +428,8 @@ class TambahbarangView extends GetView<TambahbarangController> {
                                 child: Text(
                                   "FILE",
                                   style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.w600),
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 10),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   elevation: 5,
